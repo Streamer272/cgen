@@ -3,9 +3,9 @@
 #include <malloc.h>
 #include "alloc.h"
 
-char* trim_string(const char* string) {
+char *trim_string(const char *string) {
     int last = 0;
-    char* new = alloc(malloc(sizeof(string)));
+    char *new = alloc(malloc(sizeof(string)));
     memset(new, 0, sizeof(string));
 
     int i;
@@ -20,8 +20,8 @@ char* trim_string(const char* string) {
     return new;
 }
 
-char* get_last_split_item(const char *string, char split, int max_size) {
-    char* item = alloc(malloc(sizeof(char) * max_size));
+char *get_last_split_item(const char *string, char split, int max_size) {
+    char *item = alloc(malloc(sizeof(char) * max_size));
     memset(item, 0, sizeof(char) * max_size);
     int current = 0;
 
@@ -31,8 +31,7 @@ char* get_last_split_item(const char *string, char split, int max_size) {
             item = alloc(malloc(sizeof(char) * max_size));
             memset(item, 0, sizeof(char) * max_size);
             current = 0;
-        }
-        else {
+        } else {
             item[current++] = string[i];
         }
     }

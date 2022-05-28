@@ -6,30 +6,20 @@
 #include "alloc.h"
 #include "string_funcs.h"
 #include "colors.h"
+#include "exec.h"
 
 void generate_cmake() {
-    char *project_name = get_project_name();
-    printf("Project name is '%s'\n", project_name);
-    free(project_name);
+    //char *project_name = get_project_name();
+    //printf("name: %s\n", project_name);
+    char *cmake_version = get_cmake_version();
+    //printf("version: %s\n", cmake_version);
+    //free(project_name);
 }
 
 char *get_project_name() {
-    char *cwd = alloc(malloc(sizeof(char) * PATH_MAX));
-    FILE *f;
-    char path[PATH_MAX];
-    if ((f = popen("/usr/bin/bash -c pwd", "r")) == NULL) {
-        perror("Couldn't get current working directory\n");
-        exit(1);
-    }
-    while (fgets(path, sizeof(path), f) != NULL) {
-        strcat(cwd, path);
-    }
-    pclose(f);
-    char *trimmed = trim_string(cwd);
-    free(cwd);
-    cwd = trimmed;
-    trimmed = NULL;
-    char* split = get_last_split_item(cwd, '/', PATH_MAX / 4);
+    char *cwd = exec("/usr/bin/bash -c pwd");
+    char *trimmed;
+    char *split = get_last_split_item(cwd, '/', PATH_MAX / 4);
     free(cwd);
     cwd = split;
     split = NULL;
@@ -61,4 +51,9 @@ char *get_project_name() {
     response = trimmed;
     trimmed = NULL;
     return response;
+}
+
+char *get_cmake_version() {
+    printf("ver '%s'\n", exec("/usr/bin/cmake --version"));
+    return "";
 }
