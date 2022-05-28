@@ -12,8 +12,9 @@ void generate_cmake() {
     //char *project_name = get_project_name();
     //printf("name: %s\n", project_name);
     char *cmake_version = get_cmake_version();
-    //printf("version: %s\n", cmake_version);
+    printf("version: '%s'\n", cmake_version);
     //free(project_name);
+    free(cmake_version);
 }
 
 char *get_project_name() {
@@ -54,6 +55,10 @@ char *get_project_name() {
 }
 
 char *get_cmake_version() {
-    printf("ver '%s'\n", exec("/usr/bin/cmake --version"));
-    return "";
+    char *output = exec("/usr/bin/cmake --version");
+    int major, minor, patch;
+    sscanf(output, "cmakeversion%d.%d.%d", &major, &minor, &patch);
+    memset(output, 0, strlen(output));
+    sprintf(output, "%d.%d.%d", major, minor, patch);
+    return output;
 }
