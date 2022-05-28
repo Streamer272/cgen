@@ -1,15 +1,11 @@
 #include "string_funcs.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include "alloc.h"
 
 char* trim_string(const char* string, int length) {
     int last = 0;
-    char* new;
-    if ((new = malloc(sizeof(string))) == NULL) {
-        perror("Couldn't allocate memory\n");
-        exit(1);
-    }
+    char* new = alloc(sizeof(string));
 
     for (int i = 0; i < length; i++) {
         char current = string[i];
@@ -24,24 +20,17 @@ char* trim_string(const char* string, int length) {
 char** split_string(const char *string, char split, int max_take, int max_size) {
     int current_char_index = 0;
     int current_subarray_index = 0;
-    char** array;
-    if ((array = malloc(sizeof(char*) * max_take)) == NULL) {
-        perror("Couldn't allocate memory\n");
-        exit(1);
-    }
+    char** array = alloc(sizeof(char*) * max_take);
 
     for (int i = 0; i < strlen(string); i++) {
         if (string[i] == split) {
-            current_subarray_index++;
-            if ((array[current_subarray_index] = malloc(sizeof(char*) * max_size)) == NULL) {
-                perror("Couldn't allocate memory\n");
-                exit(1);
-            }
+            array[++current_subarray_index] = alloc(sizeof(char*) * max_size);
         }
         else {
-
+            array[current_subarray_index][current_char_index++] = string[i];
         }
     }
 
+    printf("returning %p\n", array);
     return array;
 }

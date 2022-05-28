@@ -3,13 +3,18 @@
 #include <unistd.h>
 #include <limits.h>
 #include <string.h>
+#include "alloc.h"
 #include "string_funcs.h"
 
 char* get_project_name();
 void generate_cmake();
 
 int main() {
-    generate_cmake();
+    //generate_cmake();
+    char** split = split_string("/mnt/sda1/projects/test", '/', 256, PATH_MAX);
+    for (int i = 0; i < 256; i++) {
+        printf("%s\n", split[i]);
+    }
 
     return EXIT_SUCCESS;
 }
@@ -21,11 +26,7 @@ void generate_cmake() {
 }
 
 char* get_project_name() {
-    char* cwd;
-    if ((cwd = malloc(sizeof(char) * PATH_MAX)) == NULL) {
-        perror("Couldn't allocate memory\n");
-        exit(1);
-    }
+    char* cwd = alloc(sizeof(char) * PATH_MAX);
     FILE* f;
     char path[PATH_MAX];
     if ((f = popen("/usr/bin/bash -c pwd", "r")) == NULL) {
@@ -43,11 +44,7 @@ char* get_project_name() {
     cwd = trimmed;
 
     int response_size = 64;
-    char* response;
-    if ((response = malloc(sizeof(char) * response_size)) == NULL) {
-        perror("Couldn't allocate memory\n");
-        exit(1);
-    }
+    char* response = alloc(sizeof(char) * response_size);
 
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         printf("Enter project name (Blank for %s): ", cwd);
