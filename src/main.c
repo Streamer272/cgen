@@ -13,7 +13,8 @@ int main() {
     //generate_cmake();
     char** split = split_string("/mnt/sda1/projects/test", '/', 256, PATH_MAX);
     for (int i = 0; i < 256; i++) {
-        printf("%s\n", split[i]);
+        if (split[i] == NULL) break;
+        printf("%p '%s'\n", split[i], split[i]);
     }
 
     return EXIT_SUCCESS;
@@ -26,7 +27,7 @@ void generate_cmake() {
 }
 
 char* get_project_name() {
-    char* cwd = alloc(sizeof(char) * PATH_MAX);
+    char* cwd = alloc(malloc(sizeof(char) * PATH_MAX));
     FILE* f;
     char path[PATH_MAX];
     if ((f = popen("/usr/bin/bash -c pwd", "r")) == NULL) {
@@ -37,14 +38,14 @@ char* get_project_name() {
         strcat(cwd, path);
     }
     pclose(f);
-    printf("full output: '%s'\n", cwd);
     char* trimmed = trim_string(cwd, PATH_MAX);
-    printf("trimmed: '%s'\n", trimmed);
+    printf("cwd: '%s'\n", trimmed);
     free(cwd);
     cwd = trimmed;
+    trimmed = NULL;
 
     int response_size = 64;
-    char* response = alloc(sizeof(char) * response_size);
+    char* response = alloc(malloc(sizeof(char) * response_size));
 
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         printf("Enter project name (Blank for %s): ", cwd);
@@ -53,12 +54,20 @@ char* get_project_name() {
             return cwd;
         }
         else {
+            trimmed = trim_string(response, response_size);
+            free(response);
+            response = trimmed;
+            trimmed = NULL;
             return response;
         }
     }
     else {
         printf("Enter project name: ");
         fgets(response, response_size, stdin);
+        trimmed = trim_string(response, response_size);
+        free(response);
+        response = trimmed;
+        trimmed = NULL;
         return response;
     }
 }

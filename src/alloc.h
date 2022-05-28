@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-void* alloc(size_t size);
+void* alloc(void* pointer);
 
 #endif
