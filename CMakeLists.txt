@@ -5,5 +5,7 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(cgen
         src/main.c
+        src/generate.c src/generate.h
+        src/alloc.c src/alloc.h
         src/string_funcs.c src/string_funcs.h
-        src/alloc.c src/alloc.h src/generate.c src/generate.h)
+        src/colors.h)

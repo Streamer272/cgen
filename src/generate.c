@@ -5,6 +5,7 @@
 #include <string.h>
 #include "alloc.h"
 #include "string_funcs.h"
+#include "colors.h"
 
 void generate_cmake() {
     char *project_name = get_project_name();
@@ -37,7 +38,7 @@ char *get_project_name() {
     char *response = alloc(malloc(sizeof(char) * response_size));
 
     if (strlen(cwd) > 0) {
-        printf("Enter project name (%s): ", cwd);
+        printf("Enter project name " LIGHT_BLUE "(%s): " RESET, cwd);
         fgets(response, response_size, stdin);
         trimmed = trim_string(response);
         free(response);
