@@ -20,21 +20,22 @@ char* trim_string(const char* string) {
     return new;
 }
 
-char** split_string(const char *string, char split, int max_take, int max_size) {
-    int current_char_index = 0;
-    int current_subarray_index = 0;
-    char** array = alloc(malloc(sizeof(char*) * max_take));
-    array[current_subarray_index] = alloc(malloc(sizeof(char*) * max_size));
+char* get_last_split_item(const char *string, char split, int max_size) {
+    char* item = alloc(malloc(sizeof(char) * max_size));
+    memset(item, 0, sizeof(char) * max_size);
+    int current = 0;
 
     for (int i = 0; i < strlen(string); i++) {
         if (string[i] == split) {
-            array[++current_subarray_index] = alloc(malloc(sizeof(char*) * max_size));
-            current_char_index = 0;
+            free(item);
+            item = alloc(malloc(sizeof(char) * max_size));
+            memset(item, 0, sizeof(char) * max_size);
+            current = 0;
         }
         else {
-            array[current_subarray_index][current_char_index++] = string[i];
+            item[current++] = string[i];
         }
     }
 
-    return array;
+    return item;
 }

@@ -28,12 +28,16 @@ char *get_project_name() {
     free(cwd);
     cwd = trimmed;
     trimmed = NULL;
+    char* split = get_last_split_item(cwd, '/', PATH_MAX / 4);
+    free(cwd);
+    cwd = split;
+    split = NULL;
 
     int response_size = 64;
     char *response = alloc(malloc(sizeof(char) * response_size));
 
     if (strlen(cwd) > 0) {
-        printf("Enter project name (blank for %s): ", cwd);
+        printf("Enter project name (%s): ", cwd);
         fgets(response, response_size, stdin);
         trimmed = trim_string(response);
         free(response);
