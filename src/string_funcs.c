@@ -5,7 +5,7 @@
 
 char *trim_string(const char *string) {
     int last = 0;
-    char *new = alloc(malloc(sizeof(string)));
+    char *new = alloc(malloc(strlen(string) + 1));
     memset(new, 0, sizeof(string));
 
     int i;
@@ -27,14 +27,13 @@ char *get_last_split_item(const char *string, char split, int max_size) {
 
     for (int i = 0; i < strlen(string); i++) {
         if (string[i] == split) {
-            free(item);
-            item = alloc(malloc(sizeof(char) * max_size));
             memset(item, 0, sizeof(char) * max_size);
             current = 0;
         } else {
             item[current++] = string[i];
         }
     }
+    item[current] = '\0';
 
     return item;
 }

@@ -9,17 +9,18 @@ char *exec(const char *command) {
     if (command == NULL) return NULL;
 
     FILE *process;
-    char *output = alloc(malloc(sizeof(char) * 4096));
-    char line[4096];
+    char *output = alloc(malloc(sizeof(char) * 1024));
+    char line[256];
 
     if ((process = popen(command, "r")) == NULL) {
-        perror("Couldn't execute command\n");
-        exit(1);
+        return NULL;
     }
     while (fgets(line, sizeof(line), process) != NULL) {
         strcat(output, line);
+        memset(line, 0, sizeof(line));
     }
     pclose(process);
+    process = NULL;
 
     char *trimmed = trim_string(output);
     free(output);
