@@ -11,7 +11,7 @@
 
 void generate_cmake() {
     char *project_name = get_project_name();
-    printf("name: %s\n", project_name);
+    printf("name: '%s'\n", project_name);
     char *cmake_version = get_cmake_version();
     printf("version: '%s'\n", cmake_version);
     free(project_name);
@@ -33,8 +33,7 @@ char *get_project_name() {
         split = NULL;
     }
 
-    char *response = alloc(malloc(sizeof(char) * 64));
-
+    char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
     if (cwd != NULL && strlen(cwd) > 0) {
         printf("Enter project name " LIGHT_BLUE "(%s): " RESET, cwd);
         fgets(response, STDIN_INPUT_LENGTH, stdin);
@@ -49,9 +48,7 @@ char *get_project_name() {
 
     trimmed = trim_string(response);
     free(response);
-    response = trimmed;
-    trimmed = NULL;
-    return response;
+    return trimmed;
 }
 
 char *get_cmake_version() {
@@ -61,10 +58,22 @@ char *get_cmake_version() {
         sscanf(output, "cmakeversion%d.%d.%d", &major, &minor, &patch);
         memset(output, 0, strlen(output));
         sprintf(output, "%d.%d", major, minor);
-    } else {
-        output = alloc(malloc(sizeof(char) * 8));
-        strcpy(output, "3.0");
     }
 
-    return output;
+    char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
+    if (output != NULL && strlen(output) > 0) {
+        printf("Enter cmake version " LIGHT_BLUE "(%s): " RESET, output);
+        fgets(response, STDIN_INPUT_LENGTH, stdin);
+
+        if (strcmp(response, "\n") == 0) {
+            return output;
+        }
+    } else {
+        printf("Enter cmake version: ");
+        fgets(response, STDIN_INPUT_LENGTH, stdin);
+    }
+
+    char *trimmed = trim_string(response);
+    free(response);
+    return trimmed;
 }
