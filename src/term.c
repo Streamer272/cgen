@@ -32,6 +32,17 @@ char *ask(char *question, char *default_value) {
 
     char *trimmed = trim_string(response);
     free(response);
+
+    printf("\033[1A\r%s: " GREEN "%s" RESET, question, trimmed);
+    if (default_value != NULL && strlen(default_value) > 0) {
+        // 5 is strlen(" (): ")
+        // 2 is strlen(": ")
+        for (int i = 0; i < strlen(default_value) + 5 - strlen(trimmed) - 2; i++) {
+            printf(" ");
+        }
+    }
+    printf("\n");
+
     return trimmed;
 }
 
@@ -54,6 +65,7 @@ unsigned short ask_yn(char *question, unsigned short default_value) {
     }
 
     printf("\033[1A\r%s " GREEN "%s" RESET, question, return_value ? "Yes" : "No");
+    // 6 is strlen(" (y\n): ") - strlen("no")
     for (int i = 0; i < 6; i++) {
         printf(" ");
     }
