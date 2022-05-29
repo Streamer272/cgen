@@ -110,10 +110,23 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
     printf("\r    ");
     int coefficient = force_quit == 1 ? 0 : 1;
     for (int i = 0; i < answer_count + coefficient; i++) {
+        char *current_answer = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
+        sprintf(current_answer, "%s%s%s", options->prefix, answers[i], options->suffix);
         printf("\033[1A\r");
+        for (int j = 0; j < strlen(current_answer); j++) {
+            printf(" ");
+        }
+        printf("\r-");
+        free(current_answer);
     }
 
     if (force_quit == 1) return NULL;
+
+    printf("\033[1A\r%s", question);
+    if (options->help != NULL) {
+        printf(" (%s)", options->help);
+    }
+    printf(GREEN " %s%s%s\n" RESET, options->prefix, answers[current], options->suffix);
 
     char *heap_answer = alloc(malloc(sizeof(char) * (strlen(answers[current]) + 1)));
     memset(heap_answer, 0, strlen(answers[current]) + 1);

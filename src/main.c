@@ -13,11 +13,6 @@ int main(int argc, char **argv) {
 
     init_terminal();
 
-//    char ch;
-//    while ((ch = getchar()) != '\n') {
-//        printf("you pressed %c (%d)\n", ch, ch);
-//    }
-
     generate_cmake();
 
     return EXIT_SUCCESS;
