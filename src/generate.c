@@ -6,8 +6,8 @@
 #include <unistd.h>
 #include "alloc.h"
 #include "string_funcs.h"
-#include "colors.h"
 #include "exec.h"
+#include "term.h"
 
 void generate_cmake() {
     char *project_name = get_project_name();
@@ -33,22 +33,7 @@ char *get_project_name() {
         split = NULL;
     }
 
-    char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
-    if (cwd != NULL && strlen(cwd) > 0) {
-        printf("Enter project name " LIGHT_BLUE "(%s): " RESET, cwd);
-        fgets(response, STDIN_INPUT_LENGTH, stdin);
-
-        if (strcmp(response, "\n") == 0) {
-            return cwd;
-        }
-    } else {
-        printf("Enter project name: ");
-        fgets(response, STDIN_INPUT_LENGTH, stdin);
-    }
-
-    trimmed = trim_string(response);
-    free(response);
-    return trimmed;
+    return ask("Enter project name", cwd);
 }
 
 char *get_cmake_version() {
@@ -60,22 +45,7 @@ char *get_cmake_version() {
         sprintf(output, "%d.%d", major, minor);
     }
 
-    char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
-    if (output != NULL && strlen(output) > 0) {
-        printf("Enter cmake version " LIGHT_BLUE "(%s): " RESET, output);
-        fgets(response, STDIN_INPUT_LENGTH, stdin);
-
-        if (strcmp(response, "\n") == 0) {
-            return output;
-        }
-    } else {
-        printf("Enter cmake version: ");
-        fgets(response, STDIN_INPUT_LENGTH, stdin);
-    }
-
-    char *trimmed = trim_string(response);
-    free(response);
-    return trimmed;
+    return ask("Enter cmake version", output);
 }
 
 char *get_language() {
