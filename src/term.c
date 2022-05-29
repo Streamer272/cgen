@@ -35,15 +35,25 @@ char *ask(char *question, char *default_value) {
     return trimmed;
 }
 
-char *choose(char *question, char *answers[], int answer_count) {
-    int current = 0;
+char *choose(char *question, char *answers[], int answer_count, OPTIONS *options) {
+    if (options == NULL) {
+        options = &(OPTIONS) {NULL, "", "", 0};
+    }
+
+    int current = options->default_index;
     char ch;
 
-    printf("%s\n", question);
+    if (options->help == NULL) {
+        printf("%s\n", question);
+    }
+    else {
+        printf("%s (%s)\n", question, options->help);
+    }
+
     while (1) {
         for (int i = 0; i < answer_count; i++) {
-            if (current == i) printf(CYAN "\r%s\n" RESET, answers[i]);
-            else printf("\r%s\n", answers[i]);
+            if (current == i) printf(CYAN "%s%s%s\n" RESET, options->prefix, answers[i], options->suffix);
+            else printf("%s%s%s\n", options->prefix, answers[i], options->suffix);
         }
 
         ch = (char) getchar();
@@ -73,7 +83,9 @@ char *choose(char *question, char *answers[], int answer_count) {
         }
 
         printf("\r    ");
-        printf("\033[%dA", answer_count);
+        for (int i = 0; i < answer_count; i++) {
+            printf("\033[1A\r");
+        }
     }
 
     printf("\r    ");

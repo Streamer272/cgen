@@ -16,6 +16,8 @@ void generate_cmake() {
     printf("version: '%s'\n", cmake_version);*/
     char *language = get_language();
     printf("language: '%s'\n", language);
+    char *standard = get_language_standard(language);
+    printf("standard: '%s'\n", standard);
 
     /*free(project_name);
     free(cmake_version);
@@ -53,17 +55,25 @@ char *get_cmake_version() {
 
 char *get_language() {
     char *answers[] = {"C", "CXX"};
-    return choose("Choose language", answers, 2);
+    return choose("Choose language", answers, 2, NULL);
 }
 
 char *get_language_standard(char *language) {
     if (strcmp(language, "C") == 0) {
-        char *answers[] = {"C90", "C99", "C11", "C17", "C23"};
-        return choose("Choose C standard", answers, 5);
+        char *answers[] = {"90", "99", "11", "17", "23"};
+        OPTIONS options = {.suffix = ""};
+        options.prefix = "C";
+        options.help = "if you are not sure, check out https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html#prop_tgt:C_STANDARD";
+        options.default_index = 2;
+        return choose("Choose C standard", answers, 5, &options);
     }
     else if (strcmp(language, "CXX") == 0) {
-        char *answers[] = {"CXX98", "CXX11", "CXX14", "CXX17", "CXX20", "CXX23"};
-        return choose("Choose C++ standard", answers, 6);
+        char *answers[] = {"98", "11", "14", "17", "20", "23"};
+        OPTIONS options = {.suffix = ""};
+        options.prefix = "CXX";
+        options.help = "if you are not sure, check out https://cmake.org/cmake/help/latest/prop_tgt/CXX_STANDARD.html";
+        options.default_index = 2;
+        return choose("Choose C++ standard", answers, 6, &options);
     }
     return NULL;
 }
