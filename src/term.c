@@ -34,3 +34,44 @@ char *ask(char *question, char *default_value) {
     free(response);
     return trimmed;
 }
+
+char *choose(char *question, char *answers[], int answer_count) {
+    int current = 0;
+    char ch;
+
+    printf("%s\n", question);
+    while (1) {
+        for (int i = 0; i < answer_count; i++) {
+            if (current == i) printf(CYAN "\r%s\n" RESET, answers[i]);
+            else printf("\r%s\n", answers[i]);
+        }
+
+        ch = getchar();
+        if (ch == '\n') break;
+        else if (ch == 27) return NULL;
+
+        switch (ch) {
+            case 'w':
+            case 'W':
+            case 'k':
+            case 'K':
+            case 'A':
+                if (current > 0) current--;
+                break;
+            case 's':
+            case 'S':
+            case 'j':
+            case 'J':
+            case 'B':
+                if (current < answer_count - 1) current++;
+                break;
+            default:
+                break;
+        }
+
+        printf("\r   ");
+        printf("\033[%dA", answer_count + 0);
+    }
+
+    return answers[current];
+}
