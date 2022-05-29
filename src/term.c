@@ -35,12 +35,31 @@ char *ask(char *question, char *default_value) {
     return trimmed;
 }
 
+unsigned short ask_yn(char *question, unsigned short default_value) {
+    char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
+    char *y = default_value ? "Y" : "y";
+    char *n = default_value ? "n" : "N";
+    printf("%s " LIGHT_BLUE "(%s/%s): " RESET, question, y, n);
+    fgets(response, STDIN_INPUT_LENGTH, stdin);
+
+    if (strcmp(response, "\n") == 0) {
+        return default_value;
+    }
+    else if (strcmp(response, "y\n") == 0 || strcmp(response, "Y\n") == 0) {
+        return 1;
+    }
+    else if (strcmp(response, "n\n") == 0 || strcmp(response, "N\n") == 0) {
+        return 0;
+    }
+}
+
 char *choose(char *question, char *answers[], int answer_count, OPTIONS *options) {
     if (options == NULL) {
         options = &(OPTIONS) {NULL, "", "", 0};
     }
 
-    int current = options->default_index;
+    unsigned int current = options->default_index;
+    unsigned short force_quit = 0;
     char ch;
 
     if (options->help == NULL) {
@@ -59,7 +78,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
         ch = (char) getchar();
         if (ch == '\n') break;
         else if (ch == 'q') {
-            current = -1;
+            force_quit = 1;
             break;
         }
 
@@ -89,11 +108,15 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
     }
 
     printf("\r    ");
-    int coefficient = current == -1 ? 0 : 1;
+    int coefficient = force_quit == 1 ? 0 : 1;
     for (int i = 0; i < answer_count + coefficient; i++) {
         printf("\033[1A\r");
     }
 
-    if (current == -1) return NULL;
-    return answers[current];
+    if (force_quit == 1) return NULL;
+
+    char *heap_answer = alloc(malloc(sizeof(char) * (strlen(answers[current]) + 1)));
+    memset(heap_answer, 0, strlen(answers[current]) + 1);
+    strcpy(heap_answer, answers[current]);
+    return heap_answer;
 }

@@ -5,7 +5,7 @@
 void *alloc(void *pointer) {
     if (pointer == NULL) {
         perror("Couldn't allocate memory\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     return pointer;
 }

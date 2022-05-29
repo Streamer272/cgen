@@ -10,18 +10,54 @@
 #include "term.h"
 
 void generate_cmake() {
-    /*char *project_name = get_project_name();
+    char *project_name = get_project_name();
     printf("name: '%s'\n", project_name);
     char *cmake_version = get_cmake_version();
-    printf("version: '%s'\n", cmake_version);*/
+    printf("version: '%s'\n", cmake_version);
     char *language = get_language();
     printf("language: '%s'\n", language);
-    char *standard = get_language_standard(language);
-    printf("standard: '%s'\n", standard);
+    char *language_standard = get_language_standard(language);
+    printf("language_standard: '%s'\n", language_standard);
+    unsigned short create_main = ask_yn("Create main.c?", 1);
 
-    /*free(project_name);
+    FILE *cmake_file;
+    if ((cmake_file = fopen("CMakeLists.txt", "w")) == NULL) {
+        perror("Couldn't create CMakeLists.txt\nCopy the following text and paste it to CMakeLists.txt\n\n");
+        cmake_file = stdout;
+    }
+
+    fprintf(cmake_file, "cmake_minimum_required(VERSION %s)\n", cmake_version);
+    fprintf(cmake_file, "project(%s %s)\n", project_name, language);
+    fprintf(cmake_file, "\n");
+    fprintf(cmake_file, "set(CMAKE_%s_STANDARD %s)\n", language, language_standard);
+    fprintf(cmake_file, "\n");
+    fprintf(cmake_file, "add_executable(%s\n\tmain.c)\n", project_name);
+
+    if (cmake_file != stdout) fclose(cmake_file);
+
+    if (create_main) {
+        FILE *main_file;
+        if ((main_file = fopen("main.c", "w")) == NULL) {
+            perror("Couldn't create main.c\n");
+            exit(EXIT_FAILURE);
+        }
+
+        fprintf(main_file, "#include <stdio.h>\n");
+        fprintf(main_file, "#include <stdlib.h>\n");
+        fprintf(main_file, "\n");
+        fprintf(main_file, "int main(int argc, char **argv) {\n");
+        fprintf(main_file, "\tprintf(\"Hello, world!\\n\");\n");
+        fprintf(main_file, "\n");
+        fprintf(main_file, "\treturn EXIT_SUCCESS;\n");
+        fprintf(main_file, "}\n");
+
+        fclose(main_file);
+    }
+
+    free(project_name);
     free(cmake_version);
-    free(language);*/
+    free(language);
+    free(language_standard);
 }
 
 char *get_project_name() {
@@ -66,8 +102,7 @@ char *get_language_standard(char *language) {
         options.help = "if you are not sure, check out https://cmake.org/cmake/help/latest/prop_tgt/C_STANDARD.html#prop_tgt:C_STANDARD";
         options.default_index = 2;
         return choose("Choose C standard", answers, 5, &options);
-    }
-    else if (strcmp(language, "CXX") == 0) {
+    } else if (strcmp(language, "CXX") == 0) {
         char *answers[] = {"98", "11", "14", "17", "20", "23"};
         OPTIONS options = {.suffix = ""};
         options.prefix = "CXX";
