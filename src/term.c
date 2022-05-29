@@ -24,6 +24,7 @@ char *ask(char *question, char *default_value) {
         printf("%s: ", question);
     }
     fgets(response, STDIN_INPUT_LENGTH, stdin);
+    unsigned long response_length = strlen(response);
 
     if (strcmp(response, "\n") == 0 && default_value != NULL && strlen(default_value) > 0) {
         memset(response, 0, STDIN_INPUT_LENGTH);
@@ -37,7 +38,7 @@ char *ask(char *question, char *default_value) {
     if (default_value != NULL && strlen(default_value) > 0) {
         // 5 is strlen(" (): ")
         // 2 is strlen(": ")
-        for (int i = 0; i < strlen(default_value) + 5 - strlen(trimmed) - 2; i++) {
+        for (int i = 0; i < strlen(default_value) + 5 + response_length - strlen(trimmed) - 2; i++) {
             printf(" ");
         }
     }
