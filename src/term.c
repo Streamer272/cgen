@@ -42,15 +42,24 @@ unsigned short ask_yn(char *question, unsigned short default_value) {
     printf("%s " LIGHT_BLUE "(%s/%s): " RESET, question, y, n);
     fgets(response, STDIN_INPUT_LENGTH, stdin);
 
+    unsigned short return_value;
     if (strcmp(response, "\n") == 0) {
-        return default_value;
+        return_value = default_value;
     }
     else if (strcmp(response, "y\n") == 0 || strcmp(response, "Y\n") == 0) {
-        return 1;
+        return_value = 1;
     }
     else if (strcmp(response, "n\n") == 0 || strcmp(response, "N\n") == 0) {
-        return 0;
+        return_value = 0;
     }
+
+    printf("\033[1A\r%s " GREEN "%s" RESET, question, return_value ? "Yes" : "No");
+    for (int i = 0; i < 6; i++) {
+        printf(" ");
+    }
+    printf("\n");
+
+    return return_value;
 }
 
 char *choose(char *question, char *answers[], int answer_count, OPTIONS *options) {
@@ -116,7 +125,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
         for (int j = 0; j < strlen(current_answer); j++) {
             printf(" ");
         }
-        printf("\r-");
+        printf("\r");
         free(current_answer);
     }
 
