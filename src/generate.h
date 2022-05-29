@@ -7,6 +7,8 @@ char *get_project_name();
 
 char *get_cmake_version();
 
+char *get_language();
+
 void generate_cmake();
 
 #endif

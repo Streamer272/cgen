@@ -77,3 +77,6 @@ char *get_cmake_version() {
     free(response);
     return trimmed;
 }
+
+char *get_language() {
+}

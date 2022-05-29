@@ -8,5 +8,5 @@ add_executable(cgen
         src/generate.c src/generate.h
         src/alloc.c src/alloc.h
         src/string_funcs.c src/string_funcs.h
-        src/colors.h
+        src/colors.h src/os.h
         src/exec.c src/exec.h)
