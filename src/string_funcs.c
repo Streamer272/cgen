@@ -13,7 +13,7 @@ char *trim_string(const char *string) {
         char current = string[i];
         if (current == '\0') break;
         if (current == ' ' || current == '\n') continue;
-        new[last++] = current;
+        strncat(new, &current, 1);
     }
     new[i] = '\0';
 

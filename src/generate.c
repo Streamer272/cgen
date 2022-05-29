@@ -12,10 +12,10 @@
 void generate_cmake() {
     char *project_name = get_project_name();
     printf("name: %s\n", project_name);
-    //char *cmake_version = get_cmake_version();
-    //printf("version: '%s'\n", cmake_version);
+    char *cmake_version = get_cmake_version();
+    printf("version: '%s'\n", cmake_version);
     free(project_name);
-    //free(cmake_version);
+    free(cmake_version);
 }
 
 char *get_project_name() {
