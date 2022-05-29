@@ -9,6 +9,8 @@ char *get_cmake_version();
 
 char *get_language();
 
+char *get_language_standard(char *language);
+
 void generate_cmake();
 
 #endif

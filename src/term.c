@@ -46,9 +46,12 @@ char *choose(char *question, char *answers[], int answer_count) {
             else printf("\r%s\n", answers[i]);
         }
 
-        ch = getchar();
+        ch = (char) getchar();
         if (ch == '\n') break;
-        else if (ch == 27) return NULL;
+        else if (ch == 'q') {
+            current = -1;
+            break;
+        }
 
         switch (ch) {
             case 'w':
@@ -69,9 +72,16 @@ char *choose(char *question, char *answers[], int answer_count) {
                 break;
         }
 
-        printf("\r   ");
-        printf("\033[%dA", answer_count + 0);
+        printf("\r    ");
+        printf("\033[%dA", answer_count);
     }
 
+    printf("\r    ");
+    int coefficient = current == -1 ? 0 : 1;
+    for (int i = 0; i < answer_count + coefficient; i++) {
+        printf("\033[1A\r");
+    }
+
+    if (current == -1) return NULL;
     return answers[current];
 }

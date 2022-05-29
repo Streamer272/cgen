@@ -23,7 +23,6 @@ void generate_cmake() {
 }
 
 char *get_project_name() {
-    char *trimmed = NULL, *split = NULL;
     char *cwd = exec("/usr/bin/bash -c pwd");
     if (cwd == NULL) {
         if (getcwd(cwd, sizeof(cwd)) == NULL) {
@@ -31,7 +30,7 @@ char *get_project_name() {
         }
     }
     if (cwd != NULL) {
-        split = get_last_split_item(cwd, '/', PATH_MAX / 4);
+        char *split = get_last_split_item(cwd, '/', PATH_MAX / 4);
         free(cwd);
         cwd = split;
         split = NULL;
@@ -55,4 +54,16 @@ char *get_cmake_version() {
 char *get_language() {
     char *answers[] = {"C", "CXX"};
     return choose("Choose language", answers, 2);
+}
+
+char *get_language_standard(char *language) {
+    if (strcmp(language, "C") == 0) {
+        char *answers[] = {"C90", "C99", "C11", "C17", "C23"};
+        return choose("Choose C standard", answers, 5);
+    }
+    else if (strcmp(language, "CXX") == 0) {
+        char *answers[] = {"CXX98", "CXX11", "CXX14", "CXX17", "CXX20", "CXX23"};
+        return choose("Choose C++ standard", answers, 6);
+    }
+    return NULL;
 }
