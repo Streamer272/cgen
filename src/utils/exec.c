@@ -2,8 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "alloc.h"
-#include "string_funcs.h"
+#include "../helpers/alloc.h"
+#include "../helpers/string_funcs.h"
 
 char *exec(const char *command) {
     if (command == NULL) return NULL;

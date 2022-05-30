@@ -4,10 +4,10 @@
 #include <limits.h>
 #include <string.h>
 #include <unistd.h>
-#include "alloc.h"
-#include "string_funcs.h"
-#include "exec.h"
-#include "term.h"
+#include "../helpers/alloc.h"
+#include "../helpers/string_funcs.h"
+#include "../utils/exec.h"
+#include "../utils/term.h"
 
 void generate_cmake(char *project_name, char *cmake_version, char *language, char *language_standard) {
     if (project_name == NULL) project_name = get_project_name(1);

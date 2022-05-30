@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "def.h"
-#include "colors.h"
-#include "alloc.h"
-#include "term.h"
-#include "generate.h"
-#include "project.h"
+#include "helpers/def.h"
+#include "helpers/colors.h"
+#include "helpers/alloc.h"
+#include "utils/term.h"
+#include "commands/generate.h"
+#include "commands/project.h"
 
 int main(int argc, char **argv) {
     if (strcmp(OS, "linux") != 0) {

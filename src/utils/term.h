@@ -2,7 +2,7 @@
 #define CGEN_TERM_H
 
 #include <stddef.h>
-#include "def.h"
+#include "../helpers/def.h"
 
 typedef struct {
     char *help;

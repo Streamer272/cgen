@@ -1,7 +1,7 @@
 #ifndef CGEN_GENERATE_H
 #define CGEN_GENERATE_H
 
-#include "def.h"
+#include "../helpers/def.h"
 
 #define STDIN_INPUT_LENGTH 256
 
