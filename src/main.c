@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     init_terminal();
 
     if (argc <= 1) {
-        generate_cmake();
+        generate_cmake(NULL, NULL, NULL, NULL);
         return EXIT_SUCCESS;
     }
 
@@ -23,18 +23,18 @@ int main(int argc, char **argv) {
     memset(command, 0, 64);
     strcat(command, argv[1]);
 
-    if (strcmp(command, "init") == 0) {
-        generate_cmake();
+    if (strcmp(command, "i") == 0 || strcmp(command, "init") == 0) {
+        generate_cmake(NULL, NULL, NULL, NULL);
     }
     else {
         printf("\n");
-        printf("Usage: cgen COMMAND [OPTIONS]\n");
+        printf("usage: cgen COMMAND [OPTIONS]\n");
         printf("\n");
         printf("Generate CMakeLists with ease\n");
         printf("\n");
         printf("Commands:\n");
-        printf("  init   Initialize CMakeLists\n");
-        printf("  help   Display help\n");
+        printf("  i, init\tInitialize CMakeLists\n");
+        printf("  h, help\tShow help\n");
         printf("\n");
     }
 

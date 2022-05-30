@@ -10,4 +10,4 @@ add_executable(cgen
         src/string_funcs.c src/string_funcs.h
         src/colors.h src/os.h
         src/exec.c src/exec.h
-        src/term.c src/term.h)
+        src/term.c src/term.h src/project.c src/project.h)

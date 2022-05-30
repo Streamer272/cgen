@@ -11,6 +11,6 @@ char *get_language();
 
 char *get_language_standard(char *language);
 
-void generate_cmake();
+void generate_cmake(char *project_name, char *cmake_version, char *language, char *language_standard);
 
 #endif

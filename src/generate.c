@@ -9,14 +9,17 @@
 #include "exec.h"
 #include "term.h"
 
-void generate_cmake() {
-    char *project_name = get_project_name();
-    char *cmake_version = get_cmake_version();
-    char *language = get_language();
-    if (language == NULL) return;
-    char *language_standard = get_language_standard(language);
-    if (language_standard == NULL) return;
+void generate_cmake(char *project_name, char *cmake_version, char *language, char *language_standard) {
+    if (project_name == NULL) project_name = get_project_name();
+    if (cmake_version == NULL) cmake_version = get_cmake_version();
+    if (language == NULL && (language = get_language()) == NULL) return;
+    if (language_standard == NULL && (language_standard = get_language_standard(language)) == NULL) return;
     unsigned short create_main = ask_yn("Create main.c?", 1);
+    unsigned short continue_ = ask_yn("Is this ok?", 1);
+    if (!continue_) {
+        printf("Abort\n");
+        return;
+    }
 
     FILE *cmake_file;
     if ((cmake_file = fopen("CMakeLists.txt", "w")) == NULL) {
