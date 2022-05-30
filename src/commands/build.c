@@ -1,14 +1,22 @@
 #include "build.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <sys/stat.h>
 #include "../helpers/colors.h"
 #include "../helpers/dir.h"
 #include "../utils/exec.h"
 
 void build() {
-    create_dir("cgen-build", DEFAULT_MODE);
-    change_dir("cgen-build");
+    DIR *dir = opendir(BUILD_PATH);
+    if (dir == NULL) {
+        create_dir(BUILD_PATH, DEFAULT_MODE);
+    }
+    else {
+        closedir(dir);
+    }
+
+    change_dir(BUILD_PATH);
 
     printf("Running " BOLD "cmake .." RESET "\n");
     if (exec("cmake ..") == NULL) {

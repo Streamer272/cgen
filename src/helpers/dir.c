@@ -1,13 +1,13 @@
 #include "dir.h"
 #include <stdio.h>
-#include <errno.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
 void create_dir(char *name, int mode) {
     errno = 0;
-    if (mkdir(name, S_IRWXU) == 0) {
+    if (mkdir(name, mode) == 0) {
         return;
     }
 
