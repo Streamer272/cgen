@@ -12,6 +12,10 @@ typedef struct {
 
 void init_terminal();
 
+void fuck_up_terminal();
+
+void unfuck_terminal();
+
 char *ask(char *question, char *default_value);
 
 unsigned short ask_yn(char *question, unsigned short default_value);

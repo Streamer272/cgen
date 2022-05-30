@@ -1,19 +1,30 @@
 #include "term.h"
 #include <string.h>
 #include <malloc.h>
+#include <unistd.h>
 #include <termios.h>
 #include "colors.h"
 #include "alloc.h"
 #include "string_funcs.h"
 #include "generate.h"
 
+struct termios term;
+
 void init_terminal() {
+    tcgetattr(STDIN_FILENO, &term);
+}
+
+void fuck_up_terminal() {
     struct termios info;
     tcgetattr(0, &info);
     info.c_lflag &= ~ICANON;
     info.c_cc[VMIN] = 1;
     info.c_cc[VTIME] = 0;
     tcsetattr(0, TCSANOW, &info);
+}
+
+void unfuck_terminal() {
+    tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 char *ask(char *question, char *default_value) {
@@ -57,11 +68,9 @@ unsigned short ask_yn(char *question, unsigned short default_value) {
     unsigned short return_value;
     if (strcmp(response, "\n") == 0) {
         return_value = default_value;
-    }
-    else if (strcmp(response, "y\n") == 0 || strcmp(response, "Y\n") == 0) {
+    } else if (strcmp(response, "y\n") == 0 || strcmp(response, "Y\n") == 0) {
         return_value = 1;
-    }
-    else if (strcmp(response, "n\n") == 0 || strcmp(response, "N\n") == 0) {
+    } else if (strcmp(response, "n\n") == 0 || strcmp(response, "N\n") == 0) {
         return_value = 0;
     }
 
@@ -76,6 +85,8 @@ unsigned short ask_yn(char *question, unsigned short default_value) {
 }
 
 char *choose(char *question, char *answers[], int answer_count, OPTIONS *options) {
+    fuck_up_terminal();
+
     if (options == NULL) {
         options = &(OPTIONS) {NULL, "", "", 0};
     }
@@ -86,8 +97,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
 
     if (options->help == NULL) {
         printf("%s\n", question);
-    }
-    else {
+    } else {
         printf("%s (%s)\n", question, options->help);
     }
 
@@ -142,13 +152,18 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
         free(current_answer);
     }
 
-    if (force_quit == 1) return NULL;
+    if (force_quit == 1) {
+        unfuck_terminal();
+        return NULL;
+    }
 
     printf("\033[1A\r%s", question);
     if (options->help != NULL) {
         printf(" (%s)", options->help);
     }
     printf(GREEN " %s%s%s\n" RESET, options->prefix, answers[current], options->suffix);
+
+    unfuck_terminal();
 
     char *heap_answer = alloc(malloc(sizeof(char) * (strlen(answers[current]) + 1)));
     memset(heap_answer, 0, strlen(answers[current]) + 1);
