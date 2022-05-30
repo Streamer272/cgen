@@ -58,14 +58,14 @@ char *ask(char *question, char *default_value) {
     return trimmed;
 }
 
-unsigned short ask_yn(char *question, unsigned short default_value) {
+bool ask_yn(char *question, bool default_value) {
     char *response = alloc(malloc(sizeof(char) * STDIN_INPUT_LENGTH));
     char *y = default_value ? "Y" : "y";
     char *n = default_value ? "n" : "N";
     printf("%s " LIGHT_BLUE "(%s/%s): " RESET, question, y, n);
     fgets(response, STDIN_INPUT_LENGTH, stdin);
 
-    unsigned short return_value;
+    bool return_value;
     if (strcmp(response, "\n") == 0) {
         return_value = default_value;
     } else if (strcmp(response, "y\n") == 0 || strcmp(response, "Y\n") == 0) {
@@ -92,7 +92,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
     }
 
     unsigned int current = options->default_index;
-    unsigned short force_quit = 0;
+    bool force_quit = 0;
     char ch;
 
     if (options->help == NULL) {

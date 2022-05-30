@@ -10,12 +10,12 @@
 #include "term.h"
 
 void generate_cmake(char *project_name, char *cmake_version, char *language, char *language_standard) {
-    if (project_name == NULL) project_name = get_project_name();
+    if (project_name == NULL) project_name = get_project_name(1);
     if (cmake_version == NULL) cmake_version = get_cmake_version();
     if (language == NULL && (language = get_language()) == NULL) return;
     if (language_standard == NULL && (language_standard = get_language_standard(language)) == NULL) return;
-    unsigned short create_main = ask_yn("Create main.c?", 1);
-    unsigned short continue_ = ask_yn("Is this ok?", 1);
+    bool create_main = ask_yn("Create main.c?", 1);
+    bool continue_ = ask_yn("Is this ok?", 1);
     if (!continue_) {
         printf("Abort\n");
         return;
@@ -61,7 +61,9 @@ void generate_cmake(char *project_name, char *cmake_version, char *language, cha
     free(language_standard);
 }
 
-char *get_project_name() {
+char *get_project_name(bool use_default) {
+    if (!use_default) return ask("Enter project name", NULL);
+
     char *cwd = exec("/usr/bin/bash -c pwd");
     if (cwd == NULL) {
         if (getcwd(cwd, sizeof(cwd)) == NULL) {

@@ -1,9 +1,11 @@
 #ifndef CGEN_GENERATE_H
 #define CGEN_GENERATE_H
 
+#include "def.h"
+
 #define STDIN_INPUT_LENGTH 256
 
-char *get_project_name();
+char *get_project_name(bool use_default);
 
 char *get_cmake_version();
 

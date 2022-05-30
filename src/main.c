@@ -4,8 +4,9 @@
 #include "os.h"
 #include "colors.h"
 #include "alloc.h"
-#include "generate.h"
 #include "term.h"
+#include "generate.h"
+#include "project.h"
 
 int main(int argc, char **argv) {
     if (strcmp(OS, "linux") != 0) {
@@ -26,6 +27,9 @@ int main(int argc, char **argv) {
     if (strcmp(command, "i") == 0 || strcmp(command, "init") == 0) {
         generate_cmake(NULL, NULL, NULL, NULL);
     }
+    else if (strcmp(command, "n") == 0 || strcmp(command, "new") == 0) {
+        new_project(NULL);
+    }
     else {
         printf("\n");
         printf("usage: cgen COMMAND [OPTIONS]\n");
@@ -34,6 +38,7 @@ int main(int argc, char **argv) {
         printf("\n");
         printf("Commands:\n");
         printf("  i, init\tInitialize CMakeLists\n");
+        printf("  n, new\tCreate a new project\n");
         printf("  h, help\tShow help\n");
         printf("\n");
     }
