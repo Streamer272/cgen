@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "os.h"
+#include "def.h"
 #include "colors.h"
 #include "alloc.h"
 #include "term.h"
