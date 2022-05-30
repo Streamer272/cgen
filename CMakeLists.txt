@@ -11,4 +11,4 @@ add_executable(cgen
         src/helpers/colors.h src/helpers/def.h
         src/utils/exec.c src/utils/exec.h
         src/utils/term.c src/utils/term.h
-        src/commands/project.c src/commands/project.h src/commands/build.c src/commands/build.h)
+        src/commands/project.c src/commands/project.h src/commands/build.c src/commands/build.h src/helpers/dir.c src/helpers/dir.h)

@@ -81,7 +81,7 @@ char *get_project_name(bool use_default) {
 }
 
 char *get_cmake_version() {
-    char *output = exec("/usr/bin/cmake --version");
+    char *output = exec("cmake --version");
     if (output != NULL) {
         int major, minor, patch;
         sscanf(output, "cmakeversion%d.%d.%d", &major, &minor, &patch);

@@ -1,12 +1,14 @@
 #ifndef CGEN_COLORS_H
 #define CGEN_COLORS_H
 
-#define color(code) "\033[" code "m"
+#define style(code) "\e[" code "m"
 
-#define RESET color("0")
-#define GREEN color("32")
-#define YELLOW color("33")
-#define LIGHT_BLUE color("94")
-#define CYAN color("36")
+#define RESET style("0")
+#define GREEN style("32")
+#define YELLOW style("33")
+#define LIGHT_BLUE style("94")
+#define CYAN style("36")
+
+#define BOLD style("1")
 
 #endif

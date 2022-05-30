@@ -7,6 +7,7 @@
 #include "utils/term.h"
 #include "commands/generate.h"
 #include "commands/project.h"
+#include "commands/build.h"
 
 int main(int argc, char **argv) {
     if (strcmp(OS, "linux") != 0) {
@@ -30,6 +31,9 @@ int main(int argc, char **argv) {
     else if (strcmp(command, "n") == 0 || strcmp(command, "new") == 0) {
         new_project(NULL);
     }
+    else if (strcmp(command, "b") == 0 || strcmp(command, "build") == 0) {
+        build();
+    }
     else {
         printf("\n");
         printf("usage: cgen COMMAND [OPTIONS]\n");
@@ -39,6 +43,7 @@ int main(int argc, char **argv) {
         printf("Commands:\n");
         printf("  i, init\tInitialize CMakeLists\n");
         printf("  n, new\tCreate a new project\n");
+        printf("  b, build\tBuild the project\n");
         printf("  h, help\tShow help\n");
         printf("\n");
     }
