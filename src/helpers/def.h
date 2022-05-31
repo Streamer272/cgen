@@ -2,6 +2,8 @@
 #define CGEN_DEF_H
 
 #define bool unsigned short
+#define true 1
+#define false 0
 
 #ifdef _WIN32
 #define OS "windows"

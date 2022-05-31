@@ -6,8 +6,13 @@
 #include "../helpers/colors.h"
 #include "../helpers/dir.h"
 #include "../utils/exec.h"
+#include "../utils/cmake_get.h"
 
 void build() {
+//    char *project_name = cmake_get("project");
+//    printf("proj '%s'\n", project_name);
+//    return;
+
     DIR *dir = opendir(BUILD_PATH);
     if (dir == NULL) {
         create_dir(BUILD_PATH, DEFAULT_MODE);

@@ -13,4 +13,5 @@ add_executable(cgen
         src/helpers/dir.c src/helpers/dir.h
         src/commands/generate.c src/commands/generate.h
         src/commands/project.c src/commands/project.h
-        src/commands/build.c src/commands/build.h src/utils/cmake_get.c src/utils/cmake_get.h)
+        src/commands/build.c src/commands/build.h
+        src/utils/cmake_get.c src/utils/cmake_get.h)

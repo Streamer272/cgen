@@ -10,7 +10,7 @@
 #include "../utils/term.h"
 
 void generate_cmake(char *project_name, char *cmake_version, char *language, char *language_standard) {
-    if (project_name == NULL) project_name = get_project_name(1);
+    if (project_name == NULL) project_name = get_project_name(true);
     if (cmake_version == NULL) cmake_version = get_cmake_version();
     if (language == NULL && (language = get_language()) == NULL) return;
     if (language_standard == NULL && (language_standard = get_language_standard(language)) == NULL) return;

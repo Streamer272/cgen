@@ -92,7 +92,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
     }
 
     unsigned int current = options->default_index;
-    bool force_quit = 0;
+    bool force_quit = false;
     char ch;
 
     if (options->help == NULL) {
@@ -110,7 +110,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
         ch = (char) getchar();
         if (ch == '\n') break;
         else if (ch == 'q') {
-            force_quit = 1;
+            force_quit = true;
             break;
         }
 

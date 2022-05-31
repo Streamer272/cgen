@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../helpers/alloc.h"
+#include "../helpers/def.h"
 
 char *cmake_get(char *key) {
     FILE *cmake_file;
@@ -10,8 +12,30 @@ char *cmake_get(char *key) {
         exit(EXIT_FAILURE);
     }
 
-    char *line;
-    while ((line = fgets(line, 64, cmake_file)) != NULL) {
+    int key_index = 0;
+    bool record = false;
+    char ch;
+    char *value = alloc(malloc(sizeof(char) * 1024));
+    memset(value, 0, 1024);
+    while ((ch = (char) fgetc(cmake_file)) != EOF) {
+        if (record && ch != '(' && ch != ')') {
+            strncat(value, &ch, 1);
+        }
 
+        if (ch == '(') continue;
+        if (record && ch == ')') break;
+        if (ch == key[key_index]) {
+            key_index++;
+            if (key_index == strlen(key)) {
+                record = true;
+                key_index = 0;
+            }
+        }
+        else {
+            key_index = 0;
+        }
     }
+
+    fclose(cmake_file);
+    return value;
 }
