@@ -102,7 +102,7 @@ char *get_language_standard(char *language) {
         char *answers[] = {"90", "99", "11", "17", "23"};
         OPTIONS options = {.suffix = ""};
         options.prefix = "C";
-        options.help = "if you are not sure, select C11";
+        options.help = "if you are not sure, select C17"; // C17 is a bugfix of C11, there is no reason to not use it
         options.default_index = 2;
         return choose("Choose C standard", answers, 5, &options);
     } else if (strcmp(language, "CXX") == 0) {

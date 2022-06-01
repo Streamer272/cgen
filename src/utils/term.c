@@ -165,7 +165,7 @@ char *choose(char *question, char *answers[], int answer_count, OPTIONS *options
 
     unfuck_terminal();
 
-    char *heap_answer = alloc(malloc(sizeof(char) * (strlen(answers[current]) + 1)));
+    char *heap_answer = alloc(calloc((strlen(answers[current]) + 1), sizeof(char)));
     memset(heap_answer, 0, strlen(answers[current]) + 1);
     strcpy(heap_answer, answers[current]);
     return heap_answer;

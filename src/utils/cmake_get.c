@@ -15,7 +15,7 @@ char *cmake_get(char *key) {
     int key_index = 0;
     bool record = false;
     char ch;
-    char *value = alloc(malloc(sizeof(char) * 1024));
+    char *value = alloc(calloc(1024, sizeof(char)));
     memset(value, 0, 1024);
     while ((ch = (char) fgetc(cmake_file)) != EOF) {
         if (record && ch != '(' && ch != ')') {
