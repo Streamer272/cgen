@@ -3,7 +3,7 @@
 #include <string.h>
 #include "helpers/def.h"
 #include "helpers/colors.h"
-#include "helpers/alloc.h"
+#include "helpers/check_pointer.h"
 #include "utils/term.h"
 #include "commands/generate.h"
 #include "commands/project.h"
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
         return EXIT_SUCCESS;
     }
 
-    char *command = alloc(malloc(sizeof(char) * 64));
+    char *command = check_pointer(malloc(sizeof(char) * 64));
     memset(command, 0, 64);
     strcat(command, argv[1]);
 

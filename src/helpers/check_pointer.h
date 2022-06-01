@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-void *alloc(void *pointer);
+void *check_pointer(void *pointer);
 
 #endif
