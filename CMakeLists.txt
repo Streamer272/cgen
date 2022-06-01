@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(cgen
         src/main.c
-        src/helpers/alloc.c src/helpers/alloc.h
+        src/helpers/check_pointer.c src/helpers/check_pointer.h
         src/helpers/string_funcs.c src/helpers/string_funcs.h
         src/helpers/colors.h src/helpers/def.h
         src/utils/exec.c src/utils/exec.h
