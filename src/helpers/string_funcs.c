@@ -4,7 +4,7 @@
 #include "alloc.h"
 
 char *trim_string(const char *string) {
-    char *new = alloc(malloc(strlen(string) + 1));
+    char *new = alloc(calloc(strlen(string) + 1, sizeof(char)));
     memset(new, 0, sizeof(string));
 
     int i;
@@ -19,8 +19,7 @@ char *trim_string(const char *string) {
 }
 
 char *get_last_split_item(const char *string, char split, int max_size) {
-    char *item = alloc(malloc(sizeof(char) * max_size));
-    memset(item, 0, sizeof(char) * max_size);
+    char *item = alloc(calloc(max_size, sizeof(char)));
 
     for (int i = 0; i < strlen(string); i++) {
         if (string[i] == split) {

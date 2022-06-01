@@ -21,8 +21,7 @@ int main(int argc, char **argv) {
         return EXIT_SUCCESS;
     }
 
-    char *command = alloc(malloc(sizeof(char) * 64));
-    memset(command, 0, 64);
+    char *command = alloc(calloc(64, sizeof(char)));
     strcat(command, argv[1]);
 
     if (strcmp(command, "i") == 0 || strcmp(command, "init") == 0) {
@@ -31,7 +30,7 @@ int main(int argc, char **argv) {
     else if (strcmp(command, "n") == 0 || strcmp(command, "new") == 0) {
         new_project(NULL);
     }
-    else if (strcmp(command, "b") == 0 || strcmp(command, "build") == 0) {
+    else if (!strcmp(command, "b") || !strcmp(command, "build")) {
         build();
     }
     else {
