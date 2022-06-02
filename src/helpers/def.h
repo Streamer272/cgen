@@ -1,6 +1,8 @@
 #ifndef CGEN_DEF_H
 #define CGEN_DEF_H
 
+#define VERSION "0.2.0"
+
 #define bool unsigned short
 #define true 1
 #define false 0

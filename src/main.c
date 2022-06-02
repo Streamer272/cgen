@@ -48,6 +48,9 @@ int main(int argc, char **argv) {
     else if (strcmp(command, "a") == 0 || strcmp(command, "add") == 0 && argc >= 4) {
         add_dependency(argv[2], argv[3]);
     }
+    else if (strcmp(command, "v") == 0 || strcmp(command, "version") == 0) {
+        printf("cgen " VERSION "\n");
+    }
     else {
         printf("\n");
         printf("usage: cgen COMMAND [OPTIONS]\n");
@@ -55,11 +58,13 @@ int main(int argc, char **argv) {
         printf("Generate CMakeLists with ease\n");
         printf("\n");
         printf("Commands:\n");
-        printf("  i, init [PROJECT]         Initialize CMakeLists\n");
-        printf("  n, new [PROJECT]          Create a new project\n");
-        printf("  b, build                  Build the project\n");
-        printf("  a, add OWNER DEPENDENCY   Add a dependency to the project\n");
-        printf("  h, help                   Show help\n");
+        printf("  i, init   [PROJECT]           Initialize CMakeLists\n");
+        printf("  n, new    [PROJECT]           Create a new project\n");
+        printf("  b, build                      Build the project\n");
+        printf("  a, add    OWNER DEPENDENCY    Add a dependency to the project\n");
+        printf("\n");
+        printf("  v, version                    Print program version\n");
+        printf("  h, help                       Show help\n");
         printf("\n");
     }
 
