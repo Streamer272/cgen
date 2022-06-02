@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../helpers/alloc.h"
-#include "../helpers/string_funcs.h"
+#include "strings.h"
 
 char *exec(const char *command) {
     if (command == NULL) return NULL;

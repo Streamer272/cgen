@@ -5,7 +5,7 @@
 #include <termios.h>
 #include "../helpers/colors.h"
 #include "../helpers/alloc.h"
-#include "../helpers/string_funcs.h"
+#include "strings.h"
 #include "../commands/generate.h"
 
 struct termios term;

@@ -8,6 +8,7 @@
 #include "commands/generate.h"
 #include "commands/project.h"
 #include "commands/build.h"
+#include "commands/add.h"
 
 int main(int argc, char **argv) {
     if (strcmp(OS, "linux") != 0) {
@@ -26,13 +27,26 @@ int main(int argc, char **argv) {
     strcat(command, argv[1]);
 
     if (strcmp(command, "i") == 0 || strcmp(command, "init") == 0) {
-        generate_cmake(NULL, NULL, NULL, NULL);
+        if (argc <= 2) {
+            generate_cmake(NULL, NULL, NULL, NULL);
+        }
+        else {
+            generate_cmake(argv[2], NULL, NULL, NULL);
+        }
     }
     else if (strcmp(command, "n") == 0 || strcmp(command, "new") == 0) {
-        new_project(NULL);
+        if (argc <= 2) {
+            new_project(NULL);
+        }
+        else {
+            new_project(argv[2]);
+        }
     }
     else if (strcmp(command, "b") == 0 || strcmp(command, "build") == 0) {
         build();
+    }
+    else if (strcmp(command, "a") == 0 || strcmp(command, "add") == 0 && argc >= 4) {
+        add_dependency(argv[2], argv[3]);
     }
     else {
         printf("\n");
@@ -41,10 +55,11 @@ int main(int argc, char **argv) {
         printf("Generate CMakeLists with ease\n");
         printf("\n");
         printf("Commands:\n");
-        printf("  i, init\tInitialize CMakeLists\n");
-        printf("  n, new\tCreate a new project\n");
-        printf("  b, build\tBuild the project\n");
-        printf("  h, help\tShow help\n");
+        printf("  i, init [PROJECT]         Initialize CMakeLists\n");
+        printf("  n, new [PROJECT]          Create a new project\n");
+        printf("  b, build                  Build the project\n");
+        printf("  a, add OWNER DEPENDENCY   Add a dependency to the project\n");
+        printf("  h, help                   Show help\n");
         printf("\n");
     }
 

@@ -6,7 +6,7 @@ set(CMAKE_C_STANDARD 11)
 add_executable(cgen
         src/main.c
         src/helpers/alloc.c src/helpers/alloc.h
-        src/helpers/string_funcs.c src/helpers/string_funcs.h
+        src/utils/strings.c src/utils/strings.h
         src/helpers/colors.h src/helpers/def.h
         src/utils/exec.c src/utils/exec.h
         src/utils/term.c src/utils/term.h
@@ -14,4 +14,5 @@ add_executable(cgen
         src/commands/generate.c src/commands/generate.h
         src/commands/project.c src/commands/project.h
         src/commands/build.c src/commands/build.h
-        src/utils/cmake_get.c src/utils/cmake_get.h)
+        src/utils/cmake_get.c src/utils/cmake_get.h
+        src/commands/add.c src/commands/add.h)

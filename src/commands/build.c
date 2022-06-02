@@ -6,19 +6,13 @@
 #include <sys/stat.h>
 #include "../helpers/colors.h"
 #include "../helpers/dir.h"
-#include "../helpers/def.h"
 #include "../utils/exec.h"
 #include "../utils/cmake_get.h"
+#include "../utils/strings.h"
 
 void build() {
     char *project_name = cmake_get("project");
-    bool delete = false;
-    for (int i = 0; i < strlen(project_name); i++) {
-        if (project_name[i] == ' ' || delete) {
-            project_name[i] = '\0';
-            if (!delete) delete = true;
-        }
-    }
+    rewrite_only_first_word(project_name);
 
     DIR *dir = opendir(BUILD_PATH);
     if (dir == NULL) {
@@ -33,15 +27,23 @@ void build() {
     change_dir(BUILD_PATH);
 
     printf("Running " BOLD "cmake .." RESET "\n");
-    if (exec("cmake ..") == NULL) {
+    char *output = exec("cmake ..");
+    if (output == NULL) {
         perror("Couldn't run " BOLD "cmake" RESET "\n");
         exit(EXIT_FAILURE);
     }
+    else {
+        free(output);
+    }
 
     printf("Running " BOLD "make" RESET "\n");
-    if (exec("make") == NULL) {
+    output = exec("make");
+    if (output == NULL) {
         perror("Couldn't run " BOLD "make" RESET "\n");
         exit(EXIT_FAILURE);
+    }
+    else {
+        free(output);
     }
 
     change_dir("..");

@@ -4,6 +4,7 @@
 #define style(code) "\e[" code "m"
 
 #define RESET style("0")
+#define RED style("31")
 #define GREEN style("32")
 #define YELLOW style("33")
 #define LIGHT_BLUE style("94")

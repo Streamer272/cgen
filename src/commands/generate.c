@@ -5,7 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "../helpers/alloc.h"
-#include "../helpers/string_funcs.h"
+#include "../utils/strings.h"
 #include "../utils/exec.h"
 #include "../utils/term.h"
 
